@@ -1,47 +1,21 @@
-name: Build APK
+[app]
+title = Duolingo Assistant
+package.name = duolingoassistant
+package.domain = org.shahab
 
-on:
-  workflow_dispatch:
+source.dir = .
+source.include_exts = py,png,jpg,kv,atlas
 
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
+version = 1.0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+requirements = python3,kivy,requests,arabic_reshaper,python-bidi==0.4.2,google-genai
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+orientation = portrait
+android.accept_sdk_license = True
+fullscreen = 0
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+android.permissions = INTERNET,READ_EXTERNAL_STORAGE,READ_MEDIA_IMAGES
 
-      - name: Install system dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-
-      - name: Install Buildozer
-        run: |
-          pip install --upgrade pip
-          pip install buildozer cython==0.29.36
-
-      - name: Build APK
-        run: |
-          yes | buildozer android debug
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: duolingo-assistant-apk
-          path: bin/*.apk
+[buildozer]
+log_level = 2
+warn_on_root = 1
