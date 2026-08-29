@@ -11,6 +11,8 @@ version = 1.0
 requirements = python3,kivy,requests,arabic_reshaper,python-bidi==0.4.2,google-genai
 
 orientation = portrait
+android.accept_sdk_license = True
+
 fullscreen = 0
 
 android.permissions = INTERNET,READ_EXTERNAL_STORAGE,READ_MEDIA_IMAGES
